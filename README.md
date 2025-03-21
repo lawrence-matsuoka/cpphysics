@@ -33,4 +33,20 @@ Configure like the image below
 Generate the zip file
 Copy the directories inside of the directory /include (/glad and /KHR) into the system's /include directory 
 `cp -R include/* /usr/include/`
-Copy the file glad.c inside the src/ directory into the current working directory
+Move the file glad.c inside the src/ directory into the current working directory
+`mv src/glad.c /working/directory`
+
+### Compile
+`g++ sim.cpp glad.c -ldl -lglfw`
+
+## Physics concepts
+### Gravity
+
+### Velocity
+
+### Acceleration
+
+### Relativity
+
+## Out of scope
+Actual analysis of the trajectories and or determining if a system with three suns has periodicity
