@@ -36,13 +36,17 @@ Copy the directories inside of the directory /include (/glad and /KHR) into the 
 Move the file glad.c inside the src/ directory into the current working directory
 `mv src/glad.c /working/directory`
 
-### Compile
+### GLM 
+GLM is already downloaded from the previous apt install. Just include the headers in your .cpp files.
+
+## Compile
 `g++ sim.cpp glad.c -ldl -lglfw`
 
 ## Physics concepts
 ### Gravity
 
 ### Velocity
+$`dx/dt`$ = Change in distance over change in time. This can be represented by a drawCircle function.
 
 ### Acceleration
 
