@@ -9,13 +9,14 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void drawCircle(unsigned int shaderProgram, unsigned int VAO, glm::vec2 &position, glm::vec2 velocity, float deltaTime); 
 
 // Screen settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 const int numSegments = 100; // Number of segments in the circle (higher = smoother circle)
-const float radius = 0.5f;   // Radius of the circle
+const float radius = 0.1f;   // Radius of the circle
 const float centerX = 0.0f;  // X position of the center
 const float centerY = 0.0f;  // Y position of the center
 
@@ -45,6 +46,7 @@ std::vector<float> generateCircleVertices() {
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "uniform mat4 projection;\n" // Add projection uniform
+    "uniform mat4 model;\n" // Add model matrix
     "void main()\n"
     "{\n"
     "   gl_Position = projection * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
@@ -145,9 +147,24 @@ int main()
     // Get uniform location for the projection matrix
     GLint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 
+// Define velocity (direction and speed of the circle)
+    glm::vec2 velocity(0.0f, -0.1f);  // Move diagonally at 0.1 units per second
+    glm::vec2 position(0.0f, 0.0f);  // Starting at the center of the screen
+
+    // Time variables for velocity calculation
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+    
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
+        // Calculate deltaTime
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        // For testing that deltaTime is updating correctly
+//        std::cout << "DeltaTime: " << deltaTime << std::endl;
+
         // Input
         processInput(window);
 
@@ -164,11 +181,14 @@ int main()
         glm::mat4 projection = glm::ortho(-1.0f * aspectRatio, 1.0f * aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         glUseProgram(shaderProgram);
+        GLint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection)); // Send projection matrix to the shader
 
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, circleVertices.size() / 3); // +1 to include the center vertex
-        glBindVertexArray(0);
+        //glBindVertexArray(VAO);
+        //glDrawArrays(GL_TRIANGLE_FAN, 0, circleVertices.size() / 3); // +1 to include the center vertex
+        //glBindVertexArray(0);
+
+        drawCircle(shaderProgram, VAO, position, velocity, deltaTime);
 
         // Swap buffers and poll events
         glfwSwapBuffers(window);
@@ -192,4 +212,32 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
+
+void drawCircle(unsigned int shaderProgram, unsigned int VAO, glm::vec2 &position, glm::vec2 velocity, float deltaTime) {
+    // Update position based on velocity
+    position += velocity * deltaTime;
+
+    // Stop the circle from falling below the bottom of the screen
+    if (position.y - radius <= -1.0f) {  // Ensure the circle stops at the bottom of the screen
+        position.y = -1.0f + radius;  // Set the circle at the bottom, no further movement allowed
+    }
+
+    // Create a translation matrix for the position
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 0.0f));
+
+    // Get uniform location for the model matrix
+    GLint modelLoc = glGetUniformLocation(shaderProgram, "model");
+
+    // Use the shader program
+    glUseProgram(shaderProgram);
+
+    // Send the model matrix to the shader
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+    // Draw the circle
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, numSegments + 2);  // +2 to include the center vertex
+    glBindVertexArray(0);
+}
+
 

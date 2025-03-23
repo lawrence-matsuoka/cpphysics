@@ -5,6 +5,8 @@
 - Learn OpenGL
 - Apply my mathematical background to learn some basic physics
 
+The code is mostly to get down and dirty and some experience with C++ rather than trying to make this repository look "pretty".
+
 ## Dependencies
 
 ### C++
@@ -50,7 +52,8 @@ $`dx/dt`$ = Change in distance over change in time. This can be represented by a
 
 ### Acceleration
 
+
 ### Relativity
 
 ## Out of scope
-Actual analysis of the trajectories and or determining if a system with three suns has periodicity
+Actual analysis of orbits and/or determining if any system with three similarly sized bodies demonstrates periodicity.
