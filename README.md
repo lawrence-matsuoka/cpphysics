@@ -1,11 +1,19 @@
-# threebody-simulation  
+# cpphysics
+
+A repository to practice C++ and learn some basic physics using OpenGL.
 
 ## Learning outcomes
 - Practice development in C++
 - Learn OpenGL
 - Apply my mathematical background to learn some basic physics
 
-The code is mostly to get down and dirty and some experience with C++ rather than trying to make this repository look "pretty".
+The code is mostly to get down and dirty and some experience with C++ rather than trying to make this repository look "pretty". I set a goal of trying to simulate the three body problem since I enjoyed the Netflix show and have now read 2/3 of the Remembrance of Earth's Past books that the show is based upon. This has had varying degrees of success.
+
+There are examples that I made from scratch such as:
+- hello.cpp: A basic hello world program
+- circle.cpp: A basic circle created with the TRIANGLE_FAN parameter in OpenGL
+- test.cpp: What ended up being a 2D program that does have three bodies but did not behave as planned
+- gravity.cpp: Taken from [kavan010's gravity_sim repo](https://github.com/kavan010/gravity_sim) and modified to have three similarly sized bodies
 
 ## Dependencies
 
@@ -43,6 +51,7 @@ GLM is already downloaded from the previous apt install. Just include the header
 
 ## Compile
 `g++ sim.cpp glad.c -ldl -lglfw`
+
 `g++ -o simulation test.cpp -lGL -lGLEW -lglfw -lm -lstdc++ -pthread`
 
 ## Physics concepts
