@@ -43,15 +43,18 @@ GLM is already downloaded from the previous apt install. Just include the header
 
 ## Compile
 `g++ sim.cpp glad.c -ldl -lglfw`
+`g++ -o simulation test.cpp -lGL -lGLEW -lglfw -lm -lstdc++ -pthread`
 
 ## Physics concepts
-### Gravity
 
 ### Velocity
-$`dx/dt`$ = Change in distance over change in time. This can be represented by a drawCircle function.
+$`dx/dt`$ = Change in distance over change in time. 
 
 ### Acceleration
+$`dv/dt`$ = Change in velocity over change in time.
 
+### Gravity
+$`(G * m_1 * m_2)/(r^2)`$ = The gravitational constant G times the mass of the first object times the mass of the second object, divided by the distance between the masses squared.
 
 ### Relativity
 

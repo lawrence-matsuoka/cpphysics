@@ -187,11 +187,11 @@ void processInput(GLFWwindow* window, glm::vec3& cameraPos, float deltaTime) {
     float cameraSpeed = MOVEMENT_SPEED * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos.z -= cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) // Colemak DMh layout
         cameraPos.z += cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         cameraPos.x -= cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) // Colemak DHm layout
         cameraPos.x += cameraSpeed;
 }
 
